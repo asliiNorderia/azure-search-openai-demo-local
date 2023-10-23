@@ -52,12 +52,9 @@ const Chat = () => {
             return new Promise(resolve => {
                 setTimeout(() => {
                     answer += newContent;
-                    const latestResponse: ChatAppResponse = { ...askResponse,
-                        choices: [{ ...askResponse.choices[0],
-                                    message: { content: answer,
-                                        role: askResponse.choices[0].message.role
-                                    } }
-                                ]
+                    const latestResponse: ChatAppResponse = {
+                        ...askResponse,
+                        choices: [{ ...askResponse.choices[0], message: { content: answer, role: askResponse.choices[0].message.role } }]
                     };
                     setStreamedAnswers([...answers, [question, latestResponse]]);
                     resolve(null);
@@ -78,12 +75,9 @@ const Chat = () => {
         } finally {
             setIsStreaming(false);
         }
-        const fullResponse: ChatAppResponse = { ...askResponse,
-            choices: [{ ...askResponse.choices[0],
-                        message: { content: answer,
-                            role: askResponse.choices[0].message.role
-                        } }
-                    ]
+        const fullResponse: ChatAppResponse = {
+            ...askResponse,
+            choices: [{ ...askResponse.choices[0], message: { content: answer, role: askResponse.choices[0].message.role } }]
         };
         return fullResponse;
     };
@@ -101,10 +95,11 @@ const Chat = () => {
         const token = client ? await getToken(client) : undefined;
 
         try {
-            const messages: ResponseMessage[] = answers.flatMap(a => ([
+            const messages: ResponseMessage[] = answers.flatMap(a => [
                 { content: a[0], role: "user" },
-                { content: a[1].choices[0].message.content, role: "bot" }
-            ]));
+                { content: a[1].choices[0].message.content, role: "assistant" }
+                /*{ content: a[1].choices[0].message.content, role: "bot" }*/
+            ]);
 
             const request: ChatAppRequest = {
                 messages: [...messages, { content: question, role: "user" }],
@@ -304,7 +299,8 @@ const Chat = () => {
                     <div className={styles.chatInput}>
                         <QuestionInput
                             clearOnSend
-                            placeholder="Type a new question (e.g. does my plan cover annual eye exams?)"
+                            /*placeholder="Type a new question (e.g. does my plan cover annual eye exams?)"*/
+                            placeholder="Type a new question (e.g. How can I create a freight unit?)"
                             disabled={isLoading}
                             onSend={question => makeApiRequest(question)}
                         />

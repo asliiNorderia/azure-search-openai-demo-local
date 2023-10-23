@@ -35,7 +35,7 @@ export function Component(): JSX.Element {
     const [activeCitation, setActiveCitation] = useState<string>();
     const [activeAnalysisPanelTab, setActiveAnalysisPanelTab] = useState<AnalysisPanelTabs | undefined>(undefined);
 
-    const client = useLogin ? useMsal().instance : undefined
+    const client = useLogin ? useMsal().instance : undefined;
 
     const makeApiRequest = async (question: string) => {
         lastQuestionRef.current = question;
@@ -45,7 +45,7 @@ export function Component(): JSX.Element {
         setActiveCitation(undefined);
         setActiveAnalysisPanelTab(undefined);
 
-        const token = client ? await getToken(client) : undefined
+        const token = client ? await getToken(client) : undefined;
 
         try {
             const request: ChatAppRequest = {
@@ -149,7 +149,8 @@ export function Component(): JSX.Element {
                 <h1 className={styles.oneshotTitle}>Ask your data</h1>
                 <div className={styles.oneshotQuestionInput}>
                     <QuestionInput
-                        placeholder="Example: Does my plan cover annual eye exams?"
+                        /*placeholder="Example: Does my plan cover annual eye exams?"*/
+                        placeholder="Type a new question (e.g. How can I create a freight unit?)"
                         disabled={isLoading}
                         onSend={question => makeApiRequest(question)}
                     />
@@ -195,7 +196,6 @@ export function Component(): JSX.Element {
                 onRenderFooterContent={() => <DefaultButton onClick={() => setIsConfigPanelOpen(false)}>Close</DefaultButton>}
                 isFooterAtBottom={true}
             >
-
                 <TextField
                     className={styles.oneshotSettingsSeparator}
                     defaultValue={promptTemplate}
@@ -236,7 +236,7 @@ export function Component(): JSX.Element {
                         onChange={onUseOidSecurityFilterChange}
                     />
                 )}
-                {useLogin &&  (
+                {useLogin && (
                     <Checkbox
                         className={styles.oneshotSettingsSeparator}
                         checked={useGroupsSecurityFilter}
@@ -256,7 +256,7 @@ export function Component(): JSX.Element {
                     required
                     onChange={onRetrievalModeChange}
                 />
-                { useLogin && <TokenClaimsDisplay />}
+                {useLogin && <TokenClaimsDisplay />}
             </Panel>
         </div>
     );
