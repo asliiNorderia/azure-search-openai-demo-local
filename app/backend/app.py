@@ -31,11 +31,13 @@ from quart_cors import cors
 from approaches.chatreadretrieveread import ChatReadRetrieveReadApproach
 from approaches.retrievethenread import RetrieveThenReadApproach
 from core.authentication import AuthenticationHelper
+from approaches.generalchatandretrieveread import GeneralChatReadRetrieveReadApproach
 
 CONFIG_OPENAI_TOKEN = "openai_token"
 CONFIG_CREDENTIAL = "azure_credential"
 CONFIG_ASK_APPROACH = "ask_approach"
 CONFIG_CHAT_APPROACH = "chat_approach"
+CONFIG_GENERAL_CHAT_APPROACH = "general_chat_approach"
 CONFIG_BLOB_CONTAINER_CLIENT = "blob_container_client"
 CONFIG_AUTH_CLIENT = "auth_client"
 CONFIG_SEARCH_CLIENT = "search_client"
@@ -134,6 +136,33 @@ async def chat():
             return response
     except Exception as e:
         logging.exception("Exception in /chat")
+        return jsonify({"error": str(e)}), 500
+    
+
+@bp.route("/general_chat", methods=["POST"])
+async def general_chat():
+    if not request.is_json:
+        return jsonify({"error": "request must be json"}), 415
+    request_json = await request.get_json()
+    context = request_json.get("context", {})
+    auth_helper = current_app.config[CONFIG_AUTH_CLIENT]
+    context["auth_claims"] = await auth_helper.get_auth_claims_if_enabled(request.headers)
+    try:
+        approach = current_app.config[CONFIG_GENERAL_CHAT_APPROACH]
+        result = await approach.run(
+            request_json["messages"],
+            stream=request_json.get("stream", False),
+            context=context,
+            session_state=request_json.get("session_state"),
+        )
+        if isinstance(result, dict):
+            return jsonify(result)
+        else:
+            response = await make_response(format_as_ndjson(result))
+            response.timeout = None  # type: ignore
+            return response
+    except Exception as e:
+        logging.exception("Exception in /general_chat")
         return jsonify({"error": str(e)}), 500
 
 
@@ -250,6 +279,19 @@ async def setup_clients():
     )
 
     current_app.config[CONFIG_CHAT_APPROACH] = ChatReadRetrieveReadApproach(
+        search_client,
+        OPENAI_HOST,
+        AZURE_OPENAI_CHATGPT_DEPLOYMENT,
+        OPENAI_CHATGPT_MODEL,
+        AZURE_OPENAI_EMB_DEPLOYMENT,
+        OPENAI_EMB_MODEL,
+        KB_FIELDS_SOURCEPAGE,
+        KB_FIELDS_CONTENT,
+        AZURE_SEARCH_QUERY_LANGUAGE,
+        AZURE_SEARCH_QUERY_SPELLER,
+    )
+
+    current_app.config[CONFIG_GENERAL_CHAT_APPROACH] = GeneralChatReadRetrieveReadApproach(
         search_client,
         OPENAI_HOST,
         AZURE_OPENAI_CHATGPT_DEPLOYMENT,
