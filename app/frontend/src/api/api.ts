@@ -41,7 +41,7 @@ export async function chatApi(request: ChatAppRequest, idToken: string | undefin
 }
 
 export async function generalChatApi(request: ChatAppRequest, idToken: string | undefined): Promise<Response> {
-    return await fetch(`${BACKEND_URI}/chat`, {
+    return await fetch(`${BACKEND_URI}/general_chat`, {
         method: "POST",
         headers: getHeaders(idToken),
         body: JSON.stringify(request)
