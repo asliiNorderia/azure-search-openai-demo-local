@@ -10,6 +10,7 @@ import "./index.css";
 
 import Layout from "./pages/layout/Layout";
 import Chat from "./pages/chat/Chat";
+import GeneralChat from "./pages/generalchat/GeneralChat";
 
 var layout;
 if (useLogin) {
@@ -51,7 +52,7 @@ const router = createHashRouter([
             },
             {
                 path: "gch",
-                lazy: () => import("./pages/generalchat/GeneralChat")
+                element: <GeneralChat />
             },
             {
                 path: "qa",

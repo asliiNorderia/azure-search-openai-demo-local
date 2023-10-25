@@ -17,7 +17,7 @@ import { useLogin, getToken } from "../../authConfig";
 import { useMsal } from "@azure/msal-react";
 import { TokenClaimsDisplay } from "../../components/TokenClaimsDisplay";
 
-export function Component(): JSX.Element {
+const GeneralChat = () => {
     const [isConfigPanelOpen, setIsConfigPanelOpen] = useState(false);
     const [promptTemplate, setPromptTemplate] = useState<string>("");
     const [retrieveCount, setRetrieveCount] = useState<number>(3);
@@ -404,6 +404,6 @@ export function Component(): JSX.Element {
             </div>
         </div>
     );
-}
+};
 
-Component.displayName = "GeneralChat";
+export default GeneralChat;
