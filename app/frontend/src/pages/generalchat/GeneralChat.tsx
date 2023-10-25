@@ -8,7 +8,7 @@ import styles from "./GeneralChat.module.css";
 import { generalChatApi, RetrievalMode, ChatAppResponse, ChatAppResponseOrError, ChatAppRequest, ResponseMessage } from "../../api";
 import { Answer, AnswerError, AnswerLoading } from "../../components/Answer";
 import { QuestionInput } from "../../components/QuestionInput";
-import { ExampleList } from "../../components/Example";
+import { GeneralExampleList } from "../../components/Example";
 import { UserChatMessage } from "../../components/UserChatMessage";
 import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel";
 import { SettingsButton } from "../../components/SettingsButton";
@@ -234,7 +234,7 @@ export function Component(): JSX.Element {
                             <SparkleFilled fontSize={"120px"} primaryFill={"rgba(115, 118, 225, 1)"} aria-hidden="true" aria-label="Chat logo" />
                             <h1 className={styles.chatEmptyStateTitle}>General Chat</h1>
                             <h2 className={styles.chatEmptyStateSubtitle}>Ask anything or try an example</h2>
-                            <ExampleList onExampleClicked={onExampleClicked} />
+                            <GeneralExampleList onExampleClicked={onExampleClicked} />
                         </div>
                     ) : (
                         <div className={styles.chatMessageStream}>
@@ -300,7 +300,7 @@ export function Component(): JSX.Element {
                         <QuestionInput
                             clearOnSend
                             /*placeholder="Type a new question (e.g. does my plan cover annual eye exams?)"*/
-                            placeholder="Type a new question (e.g. How can I create a freight unit?)"
+                            placeholder="Type a new question (e.g. What are the benefits of AI usage?)"
                             disabled={isLoading}
                             onSend={question => makeApiRequest(question)}
                         />

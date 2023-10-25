@@ -292,7 +292,7 @@ async def setup_clients():
     )
 
     current_app.config[CONFIG_GENERAL_CHAT_APPROACH] = GeneralChatReadRetrieveReadApproach(
-        search_client,
+        #search_client,
         OPENAI_HOST,
         AZURE_OPENAI_CHATGPT_DEPLOYMENT,
         OPENAI_CHATGPT_MODEL,
