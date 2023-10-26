@@ -6,11 +6,11 @@ import readNDJSONStream from "ndjson-readablestream";
 import styles from "./GeneralChat.module.css";
 
 import { generalChatApi, RetrievalMode, ChatAppResponse, ChatAppResponseOrError, ChatAppRequest, ResponseMessage } from "../../api";
-import { Answer, AnswerError, AnswerLoading } from "../../components/Answer";
+import { GeneralAnswer, AnswerError, AnswerLoading } from "../../components/Answer";
 import { QuestionInput } from "../../components/QuestionInput";
 import { GeneralExampleList } from "../../components/Example";
 import { UserChatMessage } from "../../components/UserChatMessage";
-import { AnalysisPanel, AnalysisPanelTabs } from "../../components/AnalysisPanel";
+import { GeneralChatAnalysisPanel, GeneralChatAnalysisPanelTabs } from "../../components/AnalysisPanel";
 import { SettingsButton } from "../../components/SettingsButton";
 import { ClearChatButton } from "../../components/ClearChatButton";
 import { useLogin, getToken } from "../../authConfig";
@@ -38,7 +38,7 @@ const GeneralChat = () => {
     const [error, setError] = useState<unknown>();
 
     const [activeCitation, setActiveCitation] = useState<string>();
-    const [activeAnalysisPanelTab, setActiveAnalysisPanelTab] = useState<AnalysisPanelTabs | undefined>(undefined);
+    const [activeAnalysisPanelTab, setActiveAnalysisPanelTab] = useState<GeneralChatAnalysisPanelTabs | undefined>(undefined);
 
     const [selectedAnswer, setSelectedAnswer] = useState<number>(0);
     const [answers, setAnswers] = useState<[user: string, response: ChatAppResponse][]>([]);
@@ -200,18 +200,7 @@ const GeneralChat = () => {
         makeApiRequest(example);
     };
 
-    const onShowCitation = (citation: string, index: number) => {
-        if (activeCitation === citation && activeAnalysisPanelTab === AnalysisPanelTabs.CitationTab && selectedAnswer === index) {
-            setActiveAnalysisPanelTab(undefined);
-        } else {
-            setActiveCitation(citation);
-            setActiveAnalysisPanelTab(AnalysisPanelTabs.CitationTab);
-        }
-
-        setSelectedAnswer(index);
-    };
-
-    const onToggleTab = (tab: AnalysisPanelTabs, index: number) => {
+    const onToggleTab = (tab: GeneralChatAnalysisPanelTabs, index: number) => {
         if (activeAnalysisPanelTab === tab && selectedAnswer === index) {
             setActiveAnalysisPanelTab(undefined);
         } else {
@@ -243,14 +232,14 @@ const GeneralChat = () => {
                                     <div key={index}>
                                         <UserChatMessage message={streamedAnswer[0]} />
                                         <div className={styles.chatMessageGpt}>
-                                            <Answer
+                                            <GeneralAnswer
                                                 isStreaming={true}
                                                 key={index}
                                                 answer={streamedAnswer[1]}
                                                 isSelected={false}
-                                                onCitationClicked={c => onShowCitation(c, index)}
-                                                onThoughtProcessClicked={() => onToggleTab(AnalysisPanelTabs.ThoughtProcessTab, index)}
-                                                onSupportingContentClicked={() => onToggleTab(AnalysisPanelTabs.SupportingContentTab, index)}
+                                                onCitationClicked={c => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
+                                                onThoughtProcessClicked={() => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
+                                                onSupportingContentClicked={() => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
                                                 onFollowupQuestionClicked={q => makeApiRequest(q)}
                                                 showFollowupQuestions={useSuggestFollowupQuestions && answers.length - 1 === index}
                                             />
@@ -262,14 +251,14 @@ const GeneralChat = () => {
                                     <div key={index}>
                                         <UserChatMessage message={answer[0]} />
                                         <div className={styles.chatMessageGpt}>
-                                            <Answer
+                                            <GeneralAnswer
                                                 isStreaming={false}
                                                 key={index}
                                                 answer={answer[1]}
                                                 isSelected={selectedAnswer === index && activeAnalysisPanelTab !== undefined}
-                                                onCitationClicked={c => onShowCitation(c, index)}
-                                                onThoughtProcessClicked={() => onToggleTab(AnalysisPanelTabs.ThoughtProcessTab, index)}
-                                                onSupportingContentClicked={() => onToggleTab(AnalysisPanelTabs.SupportingContentTab, index)}
+                                                onCitationClicked={c => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
+                                                onThoughtProcessClicked={() => () => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
+                                                onSupportingContentClicked={() => () => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
                                                 onFollowupQuestionClicked={q => makeApiRequest(q)}
                                                 showFollowupQuestions={useSuggestFollowupQuestions && answers.length - 1 === index}
                                             />
@@ -308,7 +297,7 @@ const GeneralChat = () => {
                 </div>
 
                 {answers.length > 0 && activeAnalysisPanelTab && (
-                    <AnalysisPanel
+                    <GeneralChatAnalysisPanel
                         className={styles.chatAnalysisPanel}
                         activeCitation={activeCitation}
                         onActiveTabChanged={x => onToggleTab(x, selectedAnswer)}
