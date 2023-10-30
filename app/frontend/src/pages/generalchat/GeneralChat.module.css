@@ -29,14 +29,16 @@
 }
 
 .chatEmptyStateTitle {
-    font-size: 4rem;
+    font-size: 20px;
     font-weight: 600;
+    letter-spacing: 6.5px;
     margin-top: 0;
     margin-bottom: 30px;
+    color: #4a239e;
 }
 
 .chatEmptyStateSubtitle {
-    font-weight: 600;
+    font-weight: 500;
     margin-bottom: 10px;
 }
 
@@ -85,7 +87,6 @@
     padding-right: 24px;
     width: 100%;
     max-width: 1028px;
-    background: #f2f2f2;
 }
 
 .chatAnalysisPanel {
@@ -112,4 +113,8 @@
 .commandButton {
     margin-right: 20px;
     margin-bottom: 20px;
+}
+
+.subheader {
+    height: 27px;
 }

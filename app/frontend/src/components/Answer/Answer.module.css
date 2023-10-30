@@ -1,8 +1,8 @@
 .answerContainer {
     padding: 20px;
-    background: rgb(249, 249, 249);
-    border-radius: 8px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.14), 0px 0px 2px rgba(0, 0, 0, 0.12);
+    border-radius: 30px 30px 30px 0px;
+    background: #fff;
+    box-shadow: 0px 0px 10px 0px rgba(40, 97, 255, 0.57);
     outline: transparent solid 1px;
 }
 
@@ -132,4 +132,8 @@ sup {
 .loadingdots::after {
     content: "";
     animation: loading 1s infinite;
+}
+
+.avatar {
+    height: 60px;
 }

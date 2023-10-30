@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Checkbox, ChoiceGroup, IChoiceGroupOption, Panel, DefaultButton, Spinner, TextField, SpinButton, IDropdownOption, Dropdown } from "@fluentui/react";
 
 import styles from "./OneShot.module.css";
+import chatLogo from "../../assets/chatLogo.gif";
 
 import { askApi, ChatAppResponse, ChatAppRequest, RetrievalMode } from "../../api";
 import { Answer, AnswerError } from "../../components/Answer";
@@ -146,7 +147,8 @@ export function Component(): JSX.Element {
         <div className={styles.oneshotContainer}>
             <div className={styles.oneshotTopSection}>
                 <SettingsButton className={styles.settingsButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} />
-                <h1 className={styles.oneshotTitle}>Ask your Data</h1>
+                <img src={chatLogo} alt="Norderia" width="330" height="186" className={styles.chatLogo}></img>
+                <h1 className={styles.oneshotTitle}>Ask Your Data</h1>
                 <div className={styles.oneshotQuestionInput}>
                     <QuestionInput
                         /*placeholder="Example: Does my plan cover annual eye exams?"*/

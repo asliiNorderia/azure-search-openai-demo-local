@@ -4,6 +4,7 @@ import { SparkleFilled } from "@fluentui/react-icons";
 import readNDJSONStream from "ndjson-readablestream";
 
 import styles from "./GeneralChat.module.css";
+import chatLogo from "../../assets/chatLogo.gif";
 
 import { generalChatApi, RetrievalMode, ChatAppResponse, ChatAppResponseOrError, ChatAppRequest, ResponseMessage } from "../../api";
 import { GeneralAnswer, AnswerError, AnswerLoading } from "../../components/Answer";
@@ -220,8 +221,7 @@ const GeneralChat = () => {
                 <div className={styles.chatContainer}>
                     {!lastQuestionRef.current ? (
                         <div className={styles.chatEmptyState}>
-                            <SparkleFilled fontSize={"120px"} primaryFill={"rgba(115, 118, 225, 1)"} aria-hidden="true" aria-label="Chat logo" />
-                            <h1 className={styles.chatEmptyStateTitle}>General Chat</h1>
+                            <img src={chatLogo} alt="Norderia" width="330" height="186" className={styles.chatLogo}></img>
                             <h2 className={styles.chatEmptyStateSubtitle}>Ask anything or try an example</h2>
                             <GeneralExampleList onExampleClicked={onExampleClicked} />
                         </div>
@@ -233,15 +233,10 @@ const GeneralChat = () => {
                                         <UserChatMessage message={streamedAnswer[0]} />
                                         <div className={styles.chatMessageGpt}>
                                             <GeneralAnswer
-                                                isStreaming={true}
                                                 key={index}
                                                 answer={streamedAnswer[1]}
                                                 isSelected={false}
-                                                onCitationClicked={c => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
                                                 onThoughtProcessClicked={() => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
-                                                onSupportingContentClicked={() => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
-                                                onFollowupQuestionClicked={q => makeApiRequest(q)}
-                                                showFollowupQuestions={useSuggestFollowupQuestions && answers.length - 1 === index}
                                             />
                                         </div>
                                     </div>
@@ -252,15 +247,10 @@ const GeneralChat = () => {
                                         <UserChatMessage message={answer[0]} />
                                         <div className={styles.chatMessageGpt}>
                                             <GeneralAnswer
-                                                isStreaming={false}
                                                 key={index}
                                                 answer={answer[1]}
                                                 isSelected={selectedAnswer === index && activeAnalysisPanelTab !== undefined}
-                                                onCitationClicked={c => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
                                                 onThoughtProcessClicked={() => () => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
-                                                onSupportingContentClicked={() => () => onToggleTab(GeneralChatAnalysisPanelTabs.ThoughtProcessTab, index)}
-                                                onFollowupQuestionClicked={q => makeApiRequest(q)}
-                                                showFollowupQuestions={useSuggestFollowupQuestions && answers.length - 1 === index}
                                             />
                                         </div>
                                     </div>

@@ -2,10 +2,12 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+    background: linear-gradient(180deg, #fff 0%, #93beff 146.13%);
+    background-attachment: fixed;
 }
 
 .header {
-    background-color: #222222;
+    background-color: #4a239e;
     color: #f2f2f2;
 }
 
@@ -75,4 +77,8 @@
 
 .githubLogo {
     height: 20px;
+}
+
+.norderiaLogo {
+    height: 19.48px;
 }

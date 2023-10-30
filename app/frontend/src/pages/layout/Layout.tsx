@@ -1,6 +1,6 @@
 import { Outlet, NavLink, Link } from "react-router-dom";
 
-import github from "../../assets/github.svg";
+import logonorderia from "../../assets/logo-norderia.svg";
 
 import styles from "./Layout.module.css";
 
@@ -13,7 +13,7 @@ const Layout = () => {
         <div className={styles.layout}>
             <header className={styles.header} role={"banner"}>
                 <div className={styles.headerContainer}>
-                    <h3 className={styles.headerTitle}>Nora Chat</h3>
+                    <h3 className={styles.headerTitle}>NORA Chat</h3>
                     <nav>
                         <ul className={styles.headerNavList}>
                             <li>
@@ -28,12 +28,14 @@ const Layout = () => {
                             </li>
                             <li className={styles.headerNavLeftMargin}>
                                 <NavLink to="/qa" className={({ isActive }) => (isActive ? styles.headerNavPageLinkActive : styles.headerNavPageLink)}>
-                                    Ask Your Data
+                                    ask Your Data
                                 </NavLink>
                             </li>
                         </ul>
                     </nav>
-                    <h4 className={styles.headerRightText}> Norderia </h4>
+                    <h4 className={styles.headerRightText}>
+                        <img src={logonorderia} alt="Powered By Norderia" width="100" height="19.48" className={styles.norderiaLogo}></img>
+                    </h4>
                     {useLogin && <LoginButton />}
                 </div>
             </header>
