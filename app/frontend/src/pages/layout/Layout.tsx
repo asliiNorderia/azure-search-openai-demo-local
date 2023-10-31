@@ -18,7 +18,7 @@ const Layout = () => {
                         <ul className={styles.headerNavList}>
                             <li>
                                 <NavLink to="/" className={({ isActive }) => (isActive ? styles.headerNavPageLinkActive : styles.headerNavPageLink)}>
-                                    SAP Chat
+                                    sAP Chat
                                 </NavLink>
                             </li>
                             <li className={styles.headerNavLeftMargin}>
@@ -28,7 +28,7 @@ const Layout = () => {
                             </li>
                             <li className={styles.headerNavLeftMargin}>
                                 <NavLink to="/qa" className={({ isActive }) => (isActive ? styles.headerNavPageLinkActive : styles.headerNavPageLink)}>
-                                    ask Your Data
+                                    Ask Your Data
                                 </NavLink>
                             </li>
                         </ul>

@@ -1,9 +1,10 @@
 .layout {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    background: linear-gradient(180deg, #fff 0%, #93beff 146.13%);
+    background-image: url(background.png);
     background-attachment: fixed;
+    background-repeat: no-repeat;
+    background: linear-gradient(180deg, #fff 0%, #93beff 146.13%);
 }
 
 .header {
