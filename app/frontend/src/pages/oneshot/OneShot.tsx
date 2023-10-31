@@ -148,7 +148,7 @@ export function Component(): JSX.Element {
             <div className={styles.oneshotTopSection}>
                 <SettingsButton className={styles.settingsButton} onClick={() => setIsConfigPanelOpen(!isConfigPanelOpen)} />
                 <img src={chatLogo} alt="Norderia" width="330" height="186" className={styles.chatLogo}></img>
-                <h1 className={styles.oneshotTitle}>Ask Your Data</h1>
+                <h1 className={styles.oneshotTitle}></h1>
                 <div className={styles.oneshotQuestionInput}>
                     <QuestionInput
                         /*placeholder="Example: Does my plan cover annual eye exams?"*/

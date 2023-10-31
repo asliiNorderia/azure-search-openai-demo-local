@@ -3,6 +3,7 @@ import { Outlet, NavLink, Link } from "react-router-dom";
 import logonorderia from "../../assets/logo-norderia.svg";
 
 import styles from "./Layout.module.css";
+import leftLogo from "../../assets/leftLogo.png";
 
 import { useLogin } from "../../authConfig";
 
@@ -13,12 +14,12 @@ const Layout = () => {
         <div className={styles.layout}>
             <header className={styles.header} role={"banner"}>
                 <div className={styles.headerContainer}>
-                    <h3 className={styles.headerTitle}>NORA Chat</h3>
+                    <img src={leftLogo} alt="NoraChat" width="100" height="19.48" className={styles.leftLogo}></img>
                     <nav>
                         <ul className={styles.headerNavList}>
                             <li>
                                 <NavLink to="/" className={({ isActive }) => (isActive ? styles.headerNavPageLinkActive : styles.headerNavPageLink)}>
-                                    sAP Chat
+                                    SAP Chat
                                 </NavLink>
                             </li>
                             <li className={styles.headerNavLeftMargin}>
@@ -34,7 +35,9 @@ const Layout = () => {
                         </ul>
                     </nav>
                     <h4 className={styles.headerRightText}>
-                        <img src={logonorderia} alt="Powered By Norderia" width="100" height="19.48" className={styles.norderiaLogo}></img>
+                        <a href="https://www.norderia.com/" target={"_blank"} title="Norderia Website">
+                            <img src={logonorderia} alt="Powered By Norderia" width="100" height="19.48" className={styles.norderiaLogo}></img>
+                        </a>
                     </h4>
                     {useLogin && <LoginButton />}
                 </div>
