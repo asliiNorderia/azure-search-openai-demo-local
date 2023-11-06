@@ -14,7 +14,7 @@ const EXAMPLES: GeneralExampleModel[] = [
     },
     { text: "What happens in a performance review?", value: "What happens in a performance review?" },
     { text: "What does a Product Manager do?", value: "What does a Product Manager do?" }*/
-    { text: "How can I get access to SAP Learning Hub?", value: "How can I get access to SAP Learning Hub?" },
+    { text: "What is cognitive search?", value: "What is cognitive search?" },
     { text: "What is Citrix?", value: "What is Citrix?" },
     { text: "Can you list top 5 functionalities of Azure?", value: "Can you list top 5 functionalities of Azure?" }
 ];

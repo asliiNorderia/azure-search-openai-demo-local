@@ -4,7 +4,7 @@ import { SparkleFilled } from "@fluentui/react-icons";
 import readNDJSONStream from "ndjson-readablestream";
 
 import styles from "./GeneralChat.module.css";
-import chatLogo from "../../assets/chatLogo.gif";
+import chatLogo from "../../assets/generalChatLogo.gif";
 
 import { generalChatApi, RetrievalMode, ChatAppResponse, ChatAppResponseOrError, ChatAppRequest, ResponseMessage } from "../../api";
 import { GeneralAnswer, AnswerError, AnswerLoading } from "../../components/Answer";

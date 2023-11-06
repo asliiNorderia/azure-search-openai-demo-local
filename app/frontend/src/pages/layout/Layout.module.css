@@ -46,7 +46,7 @@
 .headerNavPageLink {
     color: #f2f2f2;
     text-decoration: none;
-    opacity: 0.75;
+    opacity: 0.50;
 
     transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     transition-duration: 500ms;

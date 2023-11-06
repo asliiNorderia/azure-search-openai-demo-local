@@ -139,7 +139,8 @@ info4.pdf: In-network institutions include Overlake, Swedish and others in the r
             **chatgpt_args,
             model=self.chatgpt_model,
             messages=messages,
-            temperature=overrides.get("temperature") or 0.3,
+            #temperature=overrides.get("temperature") or 0.3,
+            temperature=0.2,
             max_tokens=1024,
             n=1,
         )
