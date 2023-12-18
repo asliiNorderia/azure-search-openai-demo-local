@@ -6,6 +6,7 @@ import { MsalProvider } from "@azure/msal-react";
 import { PublicClientApplication, EventType, AccountInfo } from "@azure/msal-browser";
 import { msalConfig, useLogin } from "./authConfig";
 
+
 import "./index.css";
 
 import Layout from "./pages/layout/Layout";
@@ -57,6 +58,10 @@ const router = createHashRouter([
                 path: "*",
                 lazy: () => import("./pages/NoPage")
             }
+            /*{
+                path: "chatgpt",
+                lazy: () => import("./pages/chatconversation/ChatConversation")
+            }*/
         ]
     }
 ]);

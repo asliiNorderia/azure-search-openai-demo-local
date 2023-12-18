@@ -82,6 +82,10 @@ param principalId string = ''
 @description('Use Application Insights for monitoring and performance tracing')
 param useApplicationInsights bool = false
 
+param cosmosdbAccountName string = ''
+param cosmosdbResourceGroupName string = ''
+param cosmosdbResourceGroupLocation string = location
+
 var abbrs = loadJsonContent('abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
@@ -131,6 +135,11 @@ module applicationInsightsDashboard 'backend-dashboard.bicep' = if (useApplicati
     applicationInsightsName: monitoring.outputs.applicationInsightsName
   }
 }
+
+resource cosmosdbResourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' existing = if (!empty(cosmosdbResourceGroupName)) {
+  name: !empty(cosmosdbResourceGroupName) ? cosmosdbResourceGroupName : resourceGroup.name
+}
+
 
 
 // Create an App Service Plan to group applications under the same payment plan and SKU
@@ -191,9 +200,41 @@ module backend 'core/host/appservice.bicep' = {
       AZURE_TENANT_ID: tenant().tenantId
       // CORS support, for frontends on other hosts
       ALLOWED_ORIGIN: allowedOrigin
+      AZURE_COSMOSDB_ENDPOINT: cosmosdb.outputs.endpoint
     }
   }
 }
+
+module cosmosdb 'core/cosmos/cosmos-db.bicep' = {
+  name: 'cosmosdb'
+  scope: cosmosdbResourceGroup
+  params: {
+    name: !empty(cosmosdbAccountName) ? cosmosdbAccountName : '${abbrs.documentDBDatabaseAccounts}${resourceToken}'
+    location: cosmosdbResourceGroupLocation
+    tags: tags
+  }
+}
+
+module cosmosDbRole2 'core/security/role.bicep' = {
+  scope: cosmosdbResourceGroup
+  name: 'cosmosdb-role-2'
+  params: {
+    principalId: backend.outputs.identityPrincipalId
+    roleDefinitionId: 'b24988ac-6180-42a0-ab88-20f7382dd24c' // Contributor
+    principalType: 'ServicePrincipal'
+  }
+}
+
+module cosmosDbRoleBackend 'core/security/cosmosdb_role.bicep' = {
+  scope: cosmosdbResourceGroup
+  name: 'cosmosdb-role-backend'
+  params: {
+    cosmosDbAccountName: cosmosdb.outputs.name
+    principalId: backend.outputs.identityPrincipalId
+    roleDefinitionId:  '00000000-0000-0000-0000-000000000002' // Cosmos DB Built-in Data Contributor (Note: this is a SQL role assignment in Cosmos, not an RBAC role)
+  }
+}
+
 
 module openAi 'core/ai/cognitiveservices.bicep' = if (openAiHost == 'azure') {
   name: 'openai'
@@ -421,5 +462,10 @@ output AZURE_SEARCH_SERVICE_RESOURCE_GROUP string = searchServiceResourceGroup.n
 output AZURE_STORAGE_ACCOUNT string = storage.outputs.name
 output AZURE_STORAGE_CONTAINER string = storageContainerName
 output AZURE_STORAGE_RESOURCE_GROUP string = storageResourceGroup.name
+
+output AZURE_COSMOSDB_ACCOUNT string = cosmosdb.outputs.name
+output AZURE_COSMOSDB_ENDPOINT string = cosmosdb.outputs.endpoint
+output AZURE_COSMOSDB_DATABASE string = cosmosdb.outputs.database_name
+output AZURE_COSMOSDB_CONVERSATIONS_CONTAINER string = cosmosdb.outputs.conversations_container_name
 
 output BACKEND_URI string = backend.outputs.uri

@@ -1,11 +1,13 @@
 # Azure az webapp deployment details
-.azure
+.azure*
 *_env
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+scratch/
 
 # C extensions
 *.so
@@ -145,5 +147,6 @@ cython_debug/
 npm-debug.log*
 node_modules
 static/
+app/frontend/package-lock.json
 
 data/*.md5

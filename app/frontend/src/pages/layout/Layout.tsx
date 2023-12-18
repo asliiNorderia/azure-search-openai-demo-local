@@ -28,6 +28,7 @@ const Layout = () => {
                                     Ask a question
                                 </NavLink>
                             </li>
+                            <li> &nbsp; </li>
                             <li className={styles.headerNavLeftMargin}>
                                 <a href="https://aka.ms/entgptsearch" target={"_blank"} title="Github repository link">
                                     <img

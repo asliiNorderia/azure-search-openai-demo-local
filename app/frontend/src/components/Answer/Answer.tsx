@@ -4,7 +4,7 @@ import DOMPurify from "dompurify";
 
 import styles from "./Answer.module.css";
 
-import { ChatAppResponse, getCitationFilePath } from "../../api";
+import { AskResponse, ChatAppResponse, getCitationFilePath } from "../../api";
 import { parseAnswerToHtml } from "./AnswerParser";
 import { AnswerIcon } from "./AnswerIcon";
 

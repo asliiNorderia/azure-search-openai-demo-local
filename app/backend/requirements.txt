@@ -305,5 +305,7 @@ yarl==1.9.2
 zipp==3.17.0
     # via importlib-metadata
 
+azure-cosmos==4.3.1
+
 # The following packages are considered to be unsafe in a requirements file:
 # setuptools
